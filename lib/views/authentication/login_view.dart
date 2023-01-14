@@ -1,4 +1,6 @@
 import 'package:crypto_wallet/api/flutterfire.dart';
+import 'package:crypto_wallet/components/custom_snackbar.dart';
+import 'package:crypto_wallet/utils/validators.dart';
 import 'package:flutter/material.dart';
 
 import '../home_view.dart';
@@ -11,21 +13,48 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  TextEditingController _emailField = TextEditingController();
-  TextEditingController _passwordField = TextEditingController();
+  final TextEditingController _emailField = TextEditingController();
+  final TextEditingController _passwordField = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   void logInButtonClick(VoidCallback onSuccess) async {
-    bool shouldNavigate = await signIn(_emailField.text, _passwordField.text);
-    if (shouldNavigate) {
-      onSuccess.call();
+    if (_formKey.currentState!.validate()) {
+      await signIn(_emailField.text, _passwordField.text).then((tuple) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: CustomSnackbar(
+              isError: !tuple.item1,
+              message: tuple.item2,
+            ),
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+          ),
+        );
+        if (tuple.item1) {
+          onSuccess.call();
+        }
+      });
     }
   }
 
   void signUpButtonClick(VoidCallback onSuccess) async {
-    bool shouldNavigate = await register(_emailField.text, _passwordField.text);
-    if (shouldNavigate) {
-      onSuccess.call();
-    }
+    await register(_emailField.text, _passwordField.text).then((tuple) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: CustomSnackbar(
+            isError: !tuple.item1,
+            message: tuple.item2,
+          ),
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
+      );
+      if (tuple.item1) {
+        onSuccess.call();
+      }
+    });
   }
 
   @override
@@ -35,101 +64,116 @@ class _LoginViewState extends State<LoginView> {
         body: SingleChildScrollView(
           child: Container(
             width: MediaQuery.of(context).size.width,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width / 2,
-                  height: MediaQuery.of(context).size.height / 4,
-                  child: const Image(
-                    image: AssetImage('lib/assets/icons/icon_transparent.png'),
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  child: TextField(
-                    style: const TextStyle(
-                      fontSize: 18,
-                    ),
-                    controller: _emailField,
-                    decoration: const InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(),
-                      labelText: 'Email',
-                      labelStyle: TextStyle(color: Colors.black45),
-                      hintText: 'Email',
-                      hintStyle: TextStyle(color: Colors.black45),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width / 2,
+                    height: MediaQuery.of(context).size.height / 4,
+                    child: const Image(
+                      image:
+                          AssetImage('lib/assets/icons/icon_transparent.png'),
                     ),
                   ),
-                ),
-                SizedBox(height: MediaQuery.of(context).size.height / 35),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  child: TextField(
-                    style: const TextStyle(
-                      fontSize: 18,
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: TextFormField(
+                      style: const TextStyle(
+                        fontSize: 18,
+                      ),
+                      controller: _emailField,
+                      decoration: const InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(),
+                        focusedBorder: OutlineInputBorder(),
+                        labelText: 'Email',
+                        labelStyle: TextStyle(color: Colors.black45),
+                        hintText: 'Email',
+                        hintStyle: TextStyle(color: Colors.black45),
+                      ),
+                      validator: (value) => emailValidator(value),
                     ),
-                    controller: _passwordField,
-                    decoration: const InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(),
-                      labelText: 'Password',
-                      labelStyle: TextStyle(color: Colors.black45),
-                      hintText: 'Password',
-                      hintStyle: TextStyle(color: Colors.black45),
-                    ),
-                    obscureText: true,
                   ),
-                ),
-                SizedBox(height: MediaQuery.of(context).size.height / 35),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      height: 45,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15.0),
-                        color: Colors.blueAccent,
+                  SizedBox(height: MediaQuery.of(context).size.height / 35),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: TextFormField(
+                      style: const TextStyle(
+                        fontSize: 18,
                       ),
-                      child: MaterialButton(
-                        onPressed: () => logInButtonClick(() {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const HomeView(),
-                            ),
-                          );
-                        }),
-                        child: const Text('Log In'),
+                      controller: _passwordField,
+                      decoration: const InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(),
+                        labelText: 'Password',
+                        labelStyle: TextStyle(color: Colors.black45),
+                        hintText: 'Password',
+                        hintStyle: TextStyle(color: Colors.black45),
+                      ),
+                      obscureText: true,
+                      validator: (value) =>
+                          passwordValidator(_emailField, value),
+                    ),
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height / 35),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: 45,
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      color: Colors.blue,
+                    ),
+                    child: MaterialButton(
+                      onPressed: () => logInButtonClick(() {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const HomeView(),
+                          ),
+                        );
+                      }),
+                      child: const Text(
+                        'Log In',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                        ),
                       ),
                     ),
-                    SizedBox(width: MediaQuery.of(context).size.width * 0.05),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      height: 45,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15.0),
-                        color: Colors.white,
-                      ),
-                      child: MaterialButton(
-                        onPressed: () => signUpButtonClick(() {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const HomeView(),
-                            ),
-                          );
-                        }),
-                        child: const Text('Sign Up'),
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height / 35),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: 45,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      border: Border.all(color: Colors.blue, width: 2),
+                      color: Colors.transparent,
+                    ),
+                    child: MaterialButton(
+                      onPressed: () => signUpButtonClick(() {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const HomeView(),
+                          ),
+                        );
+                      }),
+                      child: const Text(
+                        'Sign Up',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 18,
+                        ),
                       ),
                     ),
-                  ],
-                )
-              ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
