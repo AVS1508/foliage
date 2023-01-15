@@ -1,46 +1,46 @@
 {
-    "project_info": {
-        "project_number": "174082664505",
-        "project_id": "cryptowallet-f79b1",
-        "storage_bucket": "cryptowallet-f79b1.appspot.com"
-    },
-    "client": [
-        {
-            "client_info": {
-                "mobilesdk_app_id": "1:174082664505:android:ea5724b965ee4ff38445e8",
-                "android_client_info": {
-                    "package_name": "com.example.foliage"
-                }
-            },
-            "oauth_client": [
-                {
-                    "client_id": "174082664505-c9nbin7t3opajmq4mdhhjind6f0b0grt.apps.googleusercontent.com",
-                    "client_type": 3
-                }
-            ],
-            "api_key": [
-                {
-                    "current_key": "AIzaSyC5c0g5zUnZ4j9ztZcfGwAleoOSuVluipg"
-                }
-            ],
-            "services": {
-                "appinvite_service": {
-                    "other_platform_oauth_client": [
-                        {
-                            "client_id": "174082664505-c9nbin7t3opajmq4mdhhjind6f0b0grt.apps.googleusercontent.com",
-                            "client_type": 3
-                        },
-                        {
-                            "client_id": "174082664505-54mg11jkslbpmssi2avu1pc5j772uru8.apps.googleusercontent.com",
-                            "client_type": 2,
-                            "ios_info": {
-                                "bundle_id": "com.example.cryptoWallet"
-                            }
-                        }
-                    ]
-                }
-            }
+  "project_info": {
+    "project_number": "221670945723",
+    "project_id": "foliage-1805",
+    "storage_bucket": "foliage-1805.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:221670945723:android:5d1f19fc6a303c7ac5ca9e",
+        "android_client_info": {
+          "package_name": "com.AVS1508.foliage"
         }
-    ],
-    "configuration_version": "1"
+      },
+      "oauth_client": [
+        {
+          "client_id": "221670945723-6vspcm0iccrcfnqs19hv1i42n9qoi1u8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2h44mV8I44cuQg1lZ-OnbNopusyLpWgY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "221670945723-6vspcm0iccrcfnqs19hv1i42n9qoi1u8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "221670945723-netfdugihqdnqifslke0m4faictofubn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.AVS1508.foliage"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
 }

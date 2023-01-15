@@ -44,9 +44,9 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.foliage"
+        applicationId "com.AVS1508.foliage"
         minSdkVersion 19
-        targetSdkVersion 31
+        targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true
@@ -59,6 +59,7 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    namespace 'com.example.foliage'
 }
 
 flutter {
