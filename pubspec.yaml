@@ -1,5 +1,5 @@
-name: crypto_wallet
-description: A new Flutter project.
+name: foliage
+description: Flutter application for a cryptocurrency wallet, deployed to Android and iOS, using Firebase tooling
 publish_to: none
 version: 1.0.0
 environment:
@@ -21,9 +21,8 @@ dev_dependencies:
 flutter:
     uses-material-design: true
     assets:
-        - lib/assets/icons/
-        - lib/assets/logos/
-        - lib/assets/wordmarks/
+        - lib/assets/images
+        - lib/assets/vectors
     fonts:
         - family: SourceSansPro
           fonts:
@@ -37,22 +36,22 @@ flutter:
                 style: italic
 # Adding launcher icons for Android and iOS
 flutter_icons:
-    android: launcher_icon
+    android: "launcher_icon"
     ios: true
-    image_path: lib/assets/icons/icon_white.png
+    image_path: "lib/assets/images/icon_no_alpha.png"
     min_sdk_android: 26
 # Customizing splash screens for Android and iOS
 flutter_native_splash:
     color: "#f1f0ea"
-    image: "lib/assets/icons/icon_transparent.png"
+    image: "lib/assets/images/icon_alpha.png"
     color_dark: "#272838"
-    image_dark: "lib/assets/icons/icon_transparent.png"
+    image_dark: "lib/assets/images/icon_alpha.png"
     android: true
     ios: true
     web: false
     android_12:
-        image: "lib/assets/icons/icon_transparent_android12.png"
+        image: "lib/assets/images/icon_alpha.png"
         color: "#f1f0ea"
-        image_dark: "lib/assets/icons/icon_transparent_android12.png"
+        image_dark: "lib/assets/images/icon_alpha.png"
         color_dark: "#272838"
     fullscreen: true
