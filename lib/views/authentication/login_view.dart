@@ -2,6 +2,7 @@ import 'package:crypto_wallet/api/flutterfire.dart';
 import 'package:crypto_wallet/components/custom_snackbar.dart';
 import 'package:crypto_wallet/utils/validators.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 import '../home_view.dart';
 
@@ -16,6 +17,17 @@ class _LoginViewState extends State<LoginView> {
   final TextEditingController _emailField = TextEditingController();
   final TextEditingController _passwordField = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    initializeApp();
+  }
+
+  void initializeApp() async {
+    await Future.delayed(const Duration(seconds: 3));
+    FlutterNativeSplash.remove();
+  }
 
   void logInButtonClick(VoidCallback onSuccess) async {
     if (_formKey.currentState!.validate()) {
