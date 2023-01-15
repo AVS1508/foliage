@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:crypto_wallet/utils/tuple2.dart';
+import 'package:foliage/utils/tuple2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 Future<Tuple2<bool, String>> signIn(String email, String password) async {

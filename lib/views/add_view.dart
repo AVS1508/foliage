@@ -1,4 +1,4 @@
-import 'package:crypto_wallet/api/flutterfire.dart';
+import 'package:foliage/api/flutterfire.dart';
 import 'package:flutter/material.dart';
 
 class AddView extends StatefulWidget {

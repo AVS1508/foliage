@@ -1,4 +1,4 @@
-package com.example.crypto_wallet
+package com.example.foliage
 
 import io.flutter.embedding.android.FlutterActivity
 

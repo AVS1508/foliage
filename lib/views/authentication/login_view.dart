@@ -1,6 +1,7 @@
-import 'package:crypto_wallet/api/flutterfire.dart';
-import 'package:crypto_wallet/components/custom_snackbar.dart';
-import 'package:crypto_wallet/utils/validators.dart';
+import 'package:foliage/api/flutterfire.dart';
+
+import 'package:foliage/components/custom_snackbar.dart';
+import 'package:foliage/utils/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 

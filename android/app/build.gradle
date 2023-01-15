@@ -44,7 +44,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.crypto_wallet"
+        applicationId "com.example.foliage"
         minSdkVersion 19
         targetSdkVersion 31
         versionCode flutterVersionCode.toInteger()
