@@ -1,6 +1,8 @@
 # Foliage #
 
-![Foliage](https://raw.githubusercontent.com/AVS1508/foliage/main/lib/assets/images/icon_alpha.png)
+<center>
+<img src="https://raw.githubusercontent.com/AVS1508/foliage/main/lib/assets/images/icon_alpha.png" alt="Foliage" width="160px" height="160px"/>
+</center>
 
 Foliage is a cryptocurrency wallet mobile application developed in Flutter, deployed to Android and iOS, using Firebase tooling.
 
