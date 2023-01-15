@@ -12,16 +12,12 @@ dependencies:
     firebase_auth: ^4.2.5
     cloud_firestore: ^4.3.1
     http: ^0.13.5
+    flutter_native_splash: ^2.2.16
 dev_dependencies:
     flutter_test:
         sdk: flutter
     flutter_lints: ^2.0.0
     flutter_launcher_icons: ^0.11.0
-flutter_icons:
-    android: launcher_icon
-    ios: true
-    image_path: lib/assets/icons/icon_white.png
-    min_sdk_android: 21
 flutter:
     uses-material-design: true
     assets:
@@ -39,3 +35,24 @@ flutter:
               - asset: lib/assets/fonts/SourceSansPro-SemiBoldItalic.ttf
                 weight: 600
                 style: italic
+# Adding launcher icons for Android and iOS
+flutter_icons:
+    android: launcher_icon
+    ios: true
+    image_path: lib/assets/icons/icon_white.png
+    min_sdk_android: 26
+# Customizing splash screens for Android and iOS
+flutter_native_splash:
+    color: "#f1f0ea"
+    image: "lib/assets/icons/icon_transparent.png"
+    color_dark: "#272838"
+    image_dark: "lib/assets/icons/icon_transparent.png"
+    android: true
+    ios: true
+    web: false
+    android_12:
+        image: "lib/assets/icons/icon_transparent_android12.png"
+        color: "#f1f0ea"
+        image_dark: "lib/assets/icons/icon_transparent_android12.png"
+        color_dark: "#272838"
+    fullscreen: true
