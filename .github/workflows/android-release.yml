@@ -40,7 +40,7 @@ jobs:
             #13. Decode the Android Key store
             - name: Decode keystore
               id: write_file
-              run: timheuer/base64-to-file@v1.2
+              uses: timheuer/base64-to-file@v1.2
               with:
                   fileName: "app_keystore.jks"
                   encodedString: ${{ secrets.KEYSTORE }}
