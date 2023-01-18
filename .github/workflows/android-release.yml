@@ -54,7 +54,7 @@ jobs:
                   ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
             #15. Deploy to Firebase App Distribution
             - name: Firebase App Distribution
-              uses: wzieba/Firebase-Distribution-Github-Action@v1.3.2
+              uses: wzieba/Firebase-Distribution-Github-Action@v1.4.0
               with:
                   appId: ${{ secrets.FIREBASE_APP_ID_STAGING }}
                   token: ${{ secrets.FIREBASE_TOKEN }}
