@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:foliage/api/api_methods.dart';
 import 'package:foliage/api/flutterfire.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'add_view.dart';
@@ -88,7 +87,7 @@ class _HomeViewState extends State<HomeView> {
                                 width: 5.0,
                               ),
                               Text(
-                                "Coin: ${document.id}",
+                                'Coin: ${document.id}',
                                 style: const TextStyle(
                                   fontSize: 18.0,
                                   color: Colors.white,
