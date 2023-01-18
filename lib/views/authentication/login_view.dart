@@ -86,8 +86,7 @@ class _LoginViewState extends State<LoginView> {
                     width: MediaQuery.of(context).size.width / 2,
                     height: MediaQuery.of(context).size.height / 4,
                     child: const Image(
-                      image:
-                          AssetImage('lib/assets/icons/icon_transparent.png'),
+                      image: AssetImage('lib/assets/images/logo_alpha.png'),
                     ),
                   ),
                   SizedBox(
@@ -99,13 +98,10 @@ class _LoginViewState extends State<LoginView> {
                       controller: _emailField,
                       decoration: const InputDecoration(
                         filled: true,
-                        fillColor: Colors.white,
+                        fillColor: Colors.transparent,
                         border: OutlineInputBorder(),
-                        focusedBorder: OutlineInputBorder(),
                         labelText: 'Email',
-                        labelStyle: TextStyle(color: Colors.black45),
                         hintText: 'Email',
-                        hintStyle: TextStyle(color: Colors.black45),
                       ),
                       validator: (value) => emailValidator(value),
                     ),
@@ -120,16 +116,14 @@ class _LoginViewState extends State<LoginView> {
                       controller: _passwordField,
                       decoration: const InputDecoration(
                         filled: true,
-                        fillColor: Colors.white,
+                        fillColor: Colors.transparent,
                         border: OutlineInputBorder(),
                         labelText: 'Password',
-                        labelStyle: TextStyle(color: Colors.black45),
                         hintText: 'Password',
-                        hintStyle: TextStyle(color: Colors.black45),
                       ),
                       obscureText: true,
                       validator: (value) =>
-                          passwordValidator(_emailField, value),
+                          passwordValidator(_emailField.text, value),
                     ),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height / 35),
@@ -138,7 +132,6 @@ class _LoginViewState extends State<LoginView> {
                     height: 45,
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
-                      color: Colors.blue,
                     ),
                     child: MaterialButton(
                       onPressed: () => logInButtonClick(() {
@@ -152,7 +145,6 @@ class _LoginViewState extends State<LoginView> {
                       child: const Text(
                         'Log In',
                         style: TextStyle(
-                          color: Colors.white,
                           fontSize: 18,
                         ),
                       ),
@@ -162,10 +154,8 @@ class _LoginViewState extends State<LoginView> {
                   Container(
                     width: MediaQuery.of(context).size.width * 0.8,
                     height: 45,
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(20)),
-                      border: Border.all(color: Colors.blue, width: 2),
-                      color: Colors.transparent,
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
                     ),
                     child: MaterialButton(
                       onPressed: () => signUpButtonClick(() {
@@ -179,7 +169,6 @@ class _LoginViewState extends State<LoginView> {
                       child: const Text(
                         'Sign Up',
                         style: TextStyle(
-                          color: Colors.blue,
                           fontSize: 18,
                         ),
                       ),
