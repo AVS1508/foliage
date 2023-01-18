@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:foliage/utils/theme.dart';
-import 'utils/firebase_options.dart';
+import 'constants/theme.dart';
+import 'constants/firebase_options.dart';
 import 'views/authentication/login_view.dart';
 
 void main() async {
