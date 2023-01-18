@@ -1,11 +1,11 @@
 name: Deploy Android release to Firebase App Distribution on merge
 #1. Controls when the workflow will run
 on:
-    #2. Trigger the workflow on push or pull request for the 'main' branch
+    #2. Trigger the workflow on push or pull request for the 'release' branch
     push:
-        branches: ["main"]
+        branches: ["release"]
     pull_request:
-        branches: ["main"]
+        branches: ["release"]
     #3. Allows you to run this workflow manually from the Actions tab of GitHub repo
     workflow_dispatch:
 
