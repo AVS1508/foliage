@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -46,31 +49,21 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBYvmcqAowfSLbhAGQ5B-IEjG6VnJntSII',
-    appId: '1:174082664505:web:1a4075283d3d5ff18445e8',
-    messagingSenderId: '174082664505',
-    projectId: 'cryptowallet-f79b1',
-    authDomain: 'cryptowallet-f79b1.firebaseapp.com',
-    storageBucket: 'cryptowallet-f79b1.appspot.com',
-    measurementId: 'G-7W5PBZN1B8',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyC5c0g5zUnZ4j9ztZcfGwAleoOSuVluipg',
-    appId: '1:174082664505:android:ea5724b965ee4ff38445e8',
-    messagingSenderId: '174082664505',
-    projectId: 'cryptowallet-f79b1',
-    storageBucket: 'cryptowallet-f79b1.appspot.com',
+    apiKey: 'AIzaSyA2h44mV8I44cuQg1lZ-OnbNopusyLpWgY',
+    appId: '1:221670945723:android:5d1f19fc6a303c7ac5ca9e',
+    messagingSenderId: '221670945723',
+    projectId: 'foliage-1805',
+    storageBucket: 'foliage-1805.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCHkOvqwShaqsZU4gNz6rXQjv9nZ_4SoO4',
-    appId: '1:174082664505:ios:99369b0a808e834b8445e8',
-    messagingSenderId: '174082664505',
-    projectId: 'cryptowallet-f79b1',
-    storageBucket: 'cryptowallet-f79b1.appspot.com',
-    iosClientId: '174082664505-54mg11jkslbpmssi2avu1pc5j772uru8.apps.googleusercontent.com',
-    iosBundleId: 'com.example.cryptoWallet',
+    apiKey: 'AIzaSyB2etZE8b2BDdLbH7Ozs0oASL3dPRRFHUI',
+    appId: '1:221670945723:ios:f09f1d91a06eeda9c5ca9e',
+    messagingSenderId: '221670945723',
+    projectId: 'foliage-1805',
+    storageBucket: 'foliage-1805.appspot.com',
+    iosClientId: '221670945723-netfdugihqdnqifslke0m4faictofubn.apps.googleusercontent.com',
+    iosBundleId: 'com.AVS1508.foliage',
   );
 }

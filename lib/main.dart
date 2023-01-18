@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'CryptoWallet',
+      title: 'Foliage',
       theme: ThemeData(fontFamily: 'SourceSansPro'),
       home: const LoginView(),
     );
