@@ -75,14 +75,14 @@ class _LoginViewState extends State<LoginView> {
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
-          child: Container(
+          child: SizedBox(
             width: MediaQuery.of(context).size.width,
             child: Form(
               key: _formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     width: MediaQuery.of(context).size.width / 2,
                     height: MediaQuery.of(context).size.height / 4,
                     child: const Image(
@@ -90,7 +90,7 @@ class _LoginViewState extends State<LoginView> {
                           AssetImage('lib/assets/icons/icon_transparent.png'),
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: TextFormField(
                       style: const TextStyle(
@@ -111,7 +111,7 @@ class _LoginViewState extends State<LoginView> {
                     ),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height / 35),
-                  Container(
+                  SizedBox(
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: TextFormField(
                       style: const TextStyle(
