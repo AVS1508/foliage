@@ -1,6 +1,8 @@
 import 'package:foliage/api/flutterfire.dart';
 import 'package:flutter/material.dart';
 
+import '../components/custom_snackbar.dart';
+
 class AddView extends StatefulWidget {
   const AddView({super.key});
 
@@ -10,13 +12,32 @@ class AddView extends StatefulWidget {
 
 class _AddViewState extends State<AddView> {
   List<String> coins = [
-    "bitcoin",
-    "tether",
-    "ethereum",
+    'bitcoin',
+    'tether',
+    'ethereum',
   ];
 
-  String dropdownValue = "bitcoin";
-  TextEditingController _amountController = TextEditingController();
+  String dropdownValue = 'bitcoin';
+  final TextEditingController _amountController = TextEditingController();
+
+  void addButtonClick(VoidCallback onSuccess) async {
+    await addCoin(dropdownValue, _amountController.text).then((tuple) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: CustomSnackbar(
+            isError: !tuple.item1,
+            message: tuple.item2,
+          ),
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
+      );
+      if (tuple.item1) {
+        onSuccess.call();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,10 +81,9 @@ class _AddViewState extends State<AddView> {
                 color: Colors.white,
               ),
               child: MaterialButton(
-                onPressed: () async {
-                  await addCoin(dropdownValue, _amountController.text);
+                onPressed: () => addButtonClick(() {
                   Navigator.of(context).pop();
-                },
+                }),
                 child: const Text('Add'),
               ),
             ),

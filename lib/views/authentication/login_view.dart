@@ -163,7 +163,7 @@ class _LoginViewState extends State<LoginView> {
                     width: MediaQuery.of(context).size.width * 0.8,
                     height: 45,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      borderRadius: const BorderRadius.all(Radius.circular(20)),
                       border: Border.all(color: Colors.blue, width: 2),
                       color: Colors.transparent,
                     ),
