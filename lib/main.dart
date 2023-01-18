@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'firebase_options.dart';
+import 'package:foliage/utils/theme.dart';
+import 'utils/firebase_options.dart';
 import 'views/authentication/login_view.dart';
 
 void main() async {
@@ -19,7 +20,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Foliage',
-      theme: ThemeData(fontFamily: 'SourceSansPro'),
+      theme: GlobalTheme.lightTheme,
+      darkTheme: GlobalTheme.darkTheme,
       home: const LoginView(),
     );
   }
