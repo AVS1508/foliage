@@ -26,3 +26,34 @@ This app was created with the intent of learning:
 - **Smart Contract**: A smart contract establishes the terms of an agreement, by executing code running on a blockchain such as Ethereum, removing the typical intermediary of banks or lawyers. They enable developers to build apps utilizing blockchain security, reliability, and accessibility while providing sophisticated peer-to-peer functionality, ranging from offerings like loans, insurance, logistics and gaming. (From [Coinbase Learn](https://www.coinbase.com/learn/crypto-basics/what-is-a-smart-contract))
 
 - **ERC-20 Token**: ERC-20 is a protocol for Ethereum tokens to follow within the larger Ethereum ecosystem, allowing developers to program how new tokens will function in this ecosystem. It also enables developers to accurately predict interaction between tokens, by including how tokens are transferred between addresses and how data within each token is accessed. (From [Coinbase Help](https://help.coinbase.com/en/coinbase/getting-started/crypto-education/what-is-erc20))
+
+## Theming ##
+
+Theming for the project has been configured via `lib/utils/theme.dart`, and complies with the color palette as follows:
+
+| Color Name   | Color Hex Code |
+|--------------|----------------|
+| trueWhite    | #FFFFFF        |
+| trueBlack    | #000000        |
+| offWhite     | #F1F0EA        |
+| charadeBlack | #272838        |
+| foliageGreen | #64B746        |
+| errorRed     | #D10000        |
+| materialBlue | #448AFF        |
+| cadetGrey    | #5D737E        |
+
+This color palette is used with the following theme configuration:
+
+| Property       | Light Mode   | Dark Mode    |
+|----------------|--------------|--------------|
+| `brightness`   | light        | dark         |
+| `background`   | offWhite     | charadeBlack |
+| `onBackground` | charadeBlack | offWhite     |
+| `error`        | errorRed     | errorRed     |
+| `onError`      | trueWhite    | trueWhite    |
+| `primary`      | foliageGreen | foliageGreen |
+| `onPrimary`    | trueWhite    | trueWhite    |
+| `secondary`    | materialBlue | materialBlue |
+| `onSecondary`  | trueWhite    | trueWhite    |
+| `surface`      | cadetGrey    | cadetGrey    |
+| `onSurface`    | trueWhite    | trueWhite    |
