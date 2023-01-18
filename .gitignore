@@ -4,6 +4,7 @@
 .dart_tool/
 .packages
 build/
+coverage/
 
 # Plugin data for Flutter
 .flutter-plugins
