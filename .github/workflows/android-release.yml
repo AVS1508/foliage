@@ -1,4 +1,4 @@
-name: Android Release
+name: Deploy Android release to Firebase App Distribution on merge
 #1. Controls when the workflow will run
 on:
     #2. Trigger the workflow on push or pull request for the 'main' branch
@@ -17,7 +17,7 @@ jobs:
         #6. Uses steps to represent a sequential list of tasks to be executed
         steps:
             #7. Checks out a copy of your repository on the ubuntu-latest machine
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v2
             #8. Sets up the Java version to use for Flutter app build
             - uses: actions/setup-java@v3
               with:
@@ -34,6 +34,31 @@ jobs:
             #11. Installs Flutter dependences
             - name: Install dependencies
               run: flutter pub get
-            #12. Builds the release APK
+            #12. Runs the Flutter tests
+            - name: Run tests
+              run: flutter test
+            #13. Decode the Android Key store
+            - name: Decode keystore
+              id: write_file
+              run: timheuer/base64-to-file@v1
+              with:
+                  filename: "app_keystore.jks"
+                  encoded: ${{ secrets.KEYSTORE }}
+            #14. Builds the release APK
             - name: Start release build
-              run: flutter build appbundle
+              run: flutter build apk
+              env:
+                  ANDROID_KEYSTORE_PATH: ${{ steps.write_file.outputs.filePath }}
+                  ANDROID_KEYSTORE_ALIAS: ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
+                  ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD }}
+                  ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+            #15. Deploy to Firebase App Distribution
+            - name: Firebase App Distribution
+              uses: wzieba/Firebase-Distribution-Github-Action@v1.3.2
+              with:
+                  appId: ${{ secrets.FIREBASE_APP_ID_STAGING }}
+                  token: ${{ secrets.FIREBASE_TOKEN }}
+                  groups: testers
+                  releaseNotes: |
+                      ${{ github.event.head_commit.message }}
+                  file: /home/runner/work/foliage/foliage/build/app/outputs/flutter-apk/app-release.apk
