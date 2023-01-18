@@ -40,10 +40,10 @@ jobs:
             #13. Decode the Android Key store
             - name: Decode keystore
               id: write_file
-              run: timheuer/base64-to-file@v1
+              run: timheuer/base64-to-file@v1.2
               with:
-                  filename: "app_keystore.jks"
-                  encoded: ${{ secrets.KEYSTORE }}
+                  fileName: "app_keystore.jks"
+                  encodedString: ${{ secrets.KEYSTORE }}
             #14. Builds the release APK
             - name: Start release build
               run: flutter build apk
@@ -59,6 +59,4 @@ jobs:
                   appId: ${{ secrets.FIREBASE_APP_ID_STAGING }}
                   token: ${{ secrets.FIREBASE_TOKEN }}
                   groups: testers
-                  releaseNotes: |
-                      ${{ github.event.head_commit.message }}
                   file: /home/runner/work/foliage/foliage/build/app/outputs/flutter-apk/app-release.apk
