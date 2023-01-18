@@ -1,0 +1,59 @@
+name: Deploy Android release to Firebase App Distribution on merge
+#1. Controls when the workflow will run
+on:
+    #2. Trigger the workflow on push or pull request for the 'release' branch
+    push:
+        branches: ["release"]
+    pull_request:
+        branches: ["release"]
+    #3. Allows you to run this workflow manually from the Actions tab of GitHub repo
+    workflow_dispatch:
+
+jobs:
+    # 4. A single job to build the Android app
+    build:
+        #5. Contains the type of runner that the job will run on
+        runs-on: ubuntu-latest
+        #6. Uses steps to represent a sequential list of tasks to be executed
+        steps:
+            #7. Checks out a copy of your repository on the ubuntu-latest machine
+            - uses: actions/checkout@v2
+            #8. Sets up the Java version to use for Flutter app build
+            - uses: actions/setup-java@v3
+              with:
+                  distribution: "zulu"
+                  java-version: "12.x"
+                  cache: "gradle"
+            #9. Installs the Flutter SDK
+            - uses: subosito/flutter-action@v2
+              with:
+                  #10. Flutter version to use
+                  flutter-version: "3.3.10"
+                  channel: "stable"
+                  cache: true
+            #11. Installs Flutter dependences
+            - name: Install dependencies
+              run: flutter pub get
+            #12. Decode the Android Key store
+            - name: Decode keystore
+              id: write_file
+              uses: timheuer/base64-to-file@v1.2
+              with:
+                  fileName: "app_keystore.jks"
+                  encodedString: ${{ secrets.KEYSTORE }}
+            #13. Builds the release APK
+            - name: Start release build
+              run: flutter build apk
+              env:
+                  ANDROID_KEYSTORE_PATH: ${{ steps.write_file.outputs.filePath }}
+                  ANDROID_KEYSTORE_ALIAS: ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
+                  ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD }}
+                  ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+            #14. Deploy to Firebase App Distribution
+            - name: Firebase App Distribution
+              uses: wzieba/Firebase-Distribution-Github-Action@v1.4.0
+              with:
+                  appId: ${{ secrets.FIREBASE_APP_ID_STAGING }}
+                  token: ${{ secrets.FIREBASE_TOKEN }}
+                  groups: testers
+                  file: /home/runner/work/foliage/foliage/build/app/outputs/flutter-apk/app-release.apk
