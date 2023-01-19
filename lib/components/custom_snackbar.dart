@@ -1,4 +1,8 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
+import 'package:foliage/constants/colors.dart';
 
 class CustomSnackbar extends StatelessWidget {
   final bool isError;
@@ -19,7 +23,7 @@ class CustomSnackbar extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           height: 90,
           decoration: BoxDecoration(
-            color: isError ? Colors.redAccent : Colors.greenAccent,
+            color: isError ? CustomColors.errorRed : CustomColors.foliageGreen,
             borderRadius: const BorderRadius.all(Radius.circular(20)),
           ),
           child: Row(children: [

@@ -1,6 +1,9 @@
+// Package imports:
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:foliage/utils/tuple2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+// Project imports:
+import 'package:foliage/utils/tuple2.dart';
 
 Future<Tuple2<bool, String>> signIn(String email, String password) async {
   try {
@@ -22,10 +25,12 @@ Future<Tuple2<bool, String>> signIn(String email, String password) async {
   }
 }
 
-Future<Tuple2<bool, String>> register(String email, String password) async {
+Future<Tuple2<bool, String>> register(
+    String displayName, String email, String password) async {
   try {
     await FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password);
+    await FirebaseAuth.instance.currentUser?.updateDisplayName(displayName);
     return Tuple2<bool, String>(item1: true, item2: 'Signed up with $email.');
   } on FirebaseAuthException catch (e) {
     if (e.code == 'weak-password') {

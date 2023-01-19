@@ -4,27 +4,29 @@ import 'package:flutter/material.dart';
 // Project imports:
 import 'package:foliage/api/flutterfire.dart';
 import 'package:foliage/components/custom_snackbar.dart';
-import 'package:foliage/components/terms_and_conditions.dart';
 import 'package:foliage/constants/colors.dart';
 import 'package:foliage/utils/validators.dart';
-import 'package:foliage/views/authentication/register_view.dart';
 import 'package:foliage/views/main/home_view.dart';
 
-class LoginView extends StatefulWidget {
-  const LoginView({super.key});
+class RegisterView extends StatefulWidget {
+  const RegisterView({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  State<RegisterView> createState() => _RegisterViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _RegisterViewState extends State<RegisterView> {
+  final TextEditingController _displayNameField = TextEditingController();
   final TextEditingController _emailField = TextEditingController();
   final TextEditingController _passwordField = TextEditingController();
-  final _loginFormKey = GlobalKey<FormState>();
+  final TextEditingController _confirmPasswordField = TextEditingController();
+  final _registerFormKey = GlobalKey<FormState>();
 
-  void logInButtonClick(VoidCallback onSuccess) async {
-    if (_loginFormKey.currentState!.validate()) {
-      await signIn(_emailField.text, _passwordField.text).then((tuple) {
+  void signUpButtonClick(VoidCallback onSuccess) async {
+    if (_registerFormKey.currentState!.validate()) {
+      await register(
+              _displayNameField.text, _emailField.text, _passwordField.text)
+          .then((tuple) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: CustomSnackbar(
@@ -51,10 +53,8 @@ class _LoginViewState extends State<LoginView> {
           child: SizedBox(
             width: MediaQuery.of(context).size.width,
             child: Form(
-              key: _loginFormKey,
+              key: _registerFormKey,
               child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SizedBox(
                     width: MediaQuery.of(context).size.width / 2,
@@ -63,6 +63,23 @@ class _LoginViewState extends State<LoginView> {
                       image: AssetImage('lib/assets/images/logo_alpha.png'),
                     ),
                   ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: TextFormField(
+                      style: const TextStyle(
+                        fontSize: 18,
+                      ),
+                      controller: _displayNameField,
+                      decoration: const InputDecoration(
+                        filled: true,
+                        fillColor: Colors.transparent,
+                        border: OutlineInputBorder(),
+                        labelText: 'Display Name',
+                        hintText: 'Display Name',
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height / 40),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: TextFormField(
@@ -80,7 +97,7 @@ class _LoginViewState extends State<LoginView> {
                       validator: (value) => emailValidator(value),
                     ),
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height / 30),
+                  SizedBox(height: MediaQuery.of(context).size.height / 40),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: TextFormField(
@@ -99,7 +116,27 @@ class _LoginViewState extends State<LoginView> {
                       validator: (value) => passwordValidator(value),
                     ),
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height / 30),
+                  SizedBox(height: MediaQuery.of(context).size.height / 40),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: TextFormField(
+                      style: const TextStyle(
+                        fontSize: 18,
+                      ),
+                      controller: _confirmPasswordField,
+                      decoration: const InputDecoration(
+                        filled: true,
+                        fillColor: Colors.transparent,
+                        border: OutlineInputBorder(),
+                        labelText: 'Confirm Password',
+                        hintText: 'Confirm Password',
+                      ),
+                      obscureText: true,
+                      validator: (value) =>
+                          passwordConfirmValidator(_passwordField.text, value),
+                    ),
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height / 40),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.6,
                     height: 45,
@@ -108,16 +145,17 @@ class _LoginViewState extends State<LoginView> {
                       color: CustomColors.foliageGreen,
                     ),
                     child: MaterialButton(
-                      onPressed: () => logInButtonClick(() {
-                        Navigator.pushReplacement(
+                      onPressed: () => signUpButtonClick(() {
+                        Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
                             builder: (context) => const HomeView(),
                           ),
+                          (Route<dynamic> route) => false,
                         );
                       }),
                       child: const Text(
-                        'Log In',
+                        'Sign Up',
                         style: TextStyle(
                           fontSize: 18,
                           color: CustomColors.trueWhite,
@@ -125,12 +163,12 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ),
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height / 10),
+                  SizedBox(height: MediaQuery.of(context).size.height / 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
                       Text(
-                        'Don\'t have an account?',
+                        'Already have an account?',
                         style: TextStyle(
                           fontSize: 18,
                         ),
@@ -147,15 +185,10 @@ class _LoginViewState extends State<LoginView> {
                     ),
                     child: MaterialButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const RegisterView(),
-                          ),
-                        );
+                        Navigator.pop(context);
                       },
                       child: const Text(
-                        'Sign Up',
+                        'Log In',
                         style: TextStyle(
                           fontSize: 18,
                           color: CustomColors.trueWhite,
@@ -163,8 +196,6 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ),
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height / 10),
-                  const TermsAndConditionsView(),
                 ],
               ),
             ),

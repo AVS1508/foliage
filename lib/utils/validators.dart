@@ -1,3 +1,4 @@
+// Dart imports:
 import 'dart:core';
 
 const String _emailRegex =
@@ -12,10 +13,19 @@ String? emailValidator(emailInput) {
   return null;
 }
 
-String? passwordValidator(emailInput, passwordInput) {
-  if (emailValidator(emailInput) != null &&
-      (passwordInput == null || passwordInput.isEmpty)) {
+String? passwordValidator(passwordInput) {
+  if (passwordInput == null || passwordInput.isEmpty) {
     return 'Check your info and try again.';
+  }
+  return null;
+}
+
+String? passwordConfirmValidator(passwordInput, passwordConfirmInput) {
+  if (passwordValidator(passwordInput) != null) {
+    return passwordValidator(passwordInput);
+  }
+  if (passwordInput != passwordConfirmInput) {
+    return 'Passwords do not match.';
   }
   return null;
 }

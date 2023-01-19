@@ -1,5 +1,8 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'colors.dart';
+
+// Project imports:
+import 'package:foliage/constants/colors.dart';
 
 class GlobalTheme {
   static var lightTheme = ThemeData(

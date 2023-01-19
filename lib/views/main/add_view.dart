@@ -1,7 +1,9 @@
-import 'package:foliage/api/flutterfire.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 
-import '../components/custom_snackbar.dart';
+// Project imports:
+import 'package:foliage/api/flutterfire.dart';
+import 'package:foliage/components/custom_snackbar.dart';
 
 class AddView extends StatefulWidget {
   const AddView({super.key});

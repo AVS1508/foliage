@@ -1,10 +1,18 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:foliage/api/api_methods.dart';
-import 'package:foliage/api/flutterfire.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 
-import 'add_view.dart';
+// Package imports:
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+
+// Project imports:
+import 'package:foliage/api/api_methods.dart';
+import 'package:foliage/api/flutterfire.dart';
+import 'package:foliage/components/custom_snackbar.dart';
+import 'package:foliage/constants/colors.dart';
+import 'package:foliage/main.dart';
+import 'package:foliage/views/main/add_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -118,22 +126,85 @@ class _HomeViewState extends State<HomeView> {
                 }),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const AddView(),
-              ),
-            );
-          },
-          backgroundColor: Colors.blue,
-          child: const Icon(
-            Icons.add,
-            color: Colors.white,
-          ),
+        floatingActionButton: Container(
+          child: _homeFAB(context),
         ),
       ),
     );
   }
+}
+
+Widget _homeFAB(context) {
+  void logOutButtonClick(VoidCallback onSuccess) async {
+    await signOut().then((tuple) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: CustomSnackbar(
+            isError: !tuple.item1,
+            message: tuple.item2,
+          ),
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
+      );
+      if (tuple.item1) {
+        onSuccess.call();
+      }
+    });
+  }
+
+  return SpeedDial(
+    animatedIcon: AnimatedIcons.menu_close,
+    animatedIconTheme: const IconThemeData(size: 22.0),
+    backgroundColor: CustomColors.materialBlue,
+    spacing: 15.0,
+    childMargin: const EdgeInsets.all(15.0),
+    visible: true,
+    curve: Curves.bounceIn,
+    children: [
+      SpeedDialChild(
+        child: const Icon(Icons.add),
+        backgroundColor: CustomColors.materialBlue,
+        label: 'Add Coin',
+        labelStyle: const TextStyle(fontSize: 18.0),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AddView(),
+            ),
+          );
+        },
+      ),
+      SpeedDialChild(
+        child: const Icon(Icons.logout),
+        backgroundColor: CustomColors.materialBlue,
+        label: 'Sign Out',
+        labelStyle: const TextStyle(fontSize: 18.0),
+        onTap: () => logOutButtonClick(() {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const MyApp(),
+            ),
+          );
+        }),
+      ),
+      SpeedDialChild(
+        child: const Icon(Icons.refresh),
+        backgroundColor: CustomColors.materialBlue,
+        label: 'Refresh',
+        labelStyle: const TextStyle(fontSize: 18.0),
+        onTap: () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const HomeView(),
+            ),
+          );
+        },
+      ),
+    ],
+  );
 }
