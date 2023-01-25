@@ -57,29 +57,37 @@ class MarketData {
       'symbol': 'ATOM',
     },
   };
-  static const stocks = {};
+  static const stocks = {
+    'AAPL': {'name': 'Apple Inc.', 'symbol': 'AAPL'},
+    'MSFT': {'name': 'Microsoft Corporation', 'symbol': 'MSFT'},
+    'AMZN': {'name': 'Amazon.com, Inc.', 'symbol': 'AMZN'},
+    'FB': {'name': 'Facebook, Inc.', 'symbol': 'FB'},
+    'GOOGL': {'name': 'Alphabet Inc.', 'symbol': 'GOOGL'},
+    'TSLA': {'name': 'Tesla, Inc.', 'symbol': 'TSLA'},
+    'NFLX': {'name': 'Netflix, Inc.', 'symbol': 'NFLX'},
+  };
 
-  static getCryptocurrencyIds() {
+  static List<String> getCryptocurrencyIds() {
     return cryptocurrencies.keys.toList();
   }
 
-  static getCryptocurrencyName(String id) {
-    return cryptocurrencies[id]!['name'];
+  static String getCryptocurrencyName(String id) {
+    return cryptocurrencies[id]!['name']!;
   }
 
-  static getCryptocurrencySymbol(String id) {
-    return cryptocurrencies[id]!['symbol'];
+  static String getCryptocurrencySymbol(String id) {
+    return cryptocurrencies[id]!['symbol']!;
   }
 
-  static getStockIds() {
+  static List<String> getStockIds() {
     return stocks.keys.toList();
   }
 
-  static getStockName(String id) {
-    return stocks[id]!['name'];
+  static String getStockName(String id) {
+    return stocks[id]!['name']!;
   }
 
-  static getStockSymbol(String id) {
-    return stocks[id]!['symbol'];
+  static String getStockSymbol(String id) {
+    return stocks[id]!['symbol']!;
   }
 }
