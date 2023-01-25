@@ -19,7 +19,7 @@ class GlobalTheme {
       onPrimary: CustomColors.trueWhite,
       secondary: CustomColors.materialBlue,
       onSecondary: CustomColors.trueWhite,
-      surface: CustomColors.cadetGrey,
+      surface: CustomColors.foliageGreen,
       onSurface: CustomColors.trueWhite,
     ),
   );
@@ -37,7 +37,7 @@ class GlobalTheme {
       onPrimary: CustomColors.trueWhite,
       secondary: CustomColors.materialBlue,
       onSecondary: CustomColors.trueWhite,
-      surface: CustomColors.cadetGrey,
+      surface: CustomColors.foliageGreen,
       onSurface: CustomColors.trueWhite,
     ),
   );
