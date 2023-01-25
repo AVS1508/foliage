@@ -8,8 +8,8 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 // Project imports:
 import 'package:foliage/api/coingecko.dart';
-import 'package:foliage/api/user.dart';
 import 'package:foliage/api/cryptocurrency.dart';
+import 'package:foliage/api/user.dart';
 import 'package:foliage/components/custom_snackbar.dart';
 import 'package:foliage/constants/colors.dart';
 import 'package:foliage/main.dart';
