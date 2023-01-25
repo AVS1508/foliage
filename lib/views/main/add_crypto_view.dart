@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -59,18 +60,27 @@ class _AddCryptoViewState extends State<AddCryptoView> {
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.9,
-                  child: DropdownButtonFormField(
+                  child: DropdownButtonFormField2(
+                    isExpanded: true,
+                    hint: const Expanded(
+                      child: Text(
+                        'Token Name',
+                        style: TextStyle(
+                          fontSize: 18,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                     decoration: const InputDecoration(
+                      isDense: true,
+                      contentPadding: EdgeInsets.symmetric(vertical: 20.0, horizontal: -4.0),
                       filled: true,
                       fillColor: Colors.transparent,
                       border: OutlineInputBorder(),
                     ),
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    style: const TextStyle(
-                      fontSize: 18,
-                    ),
+                    dropdownMaxHeight: 200,
+                    scrollbarAlwaysShow: true,
                     value: dropdownValue,
-                    hint: const Text('Token Name'),
                     onChanged: (value) {
                       setState(() {
                         dropdownValue = value.toString();

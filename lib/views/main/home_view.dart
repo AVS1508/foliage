@@ -24,9 +24,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  double bitcoin = 0.0;
-  double ethereum = 0.0;
-  double tether = 0.0;
+  var cryptocurrencyPrices = {for (var id in MarketData.getCryptocurrencyIds()) id: 0.0};
 
   @override
   void initState() {
@@ -35,22 +33,17 @@ class _HomeViewState extends State<HomeView> {
   }
 
   getValues() async {
-    bitcoin = await getCoinPrice('bitcoin');
-    ethereum = await getCoinPrice('ethereum');
-    tether = await getCoinPrice('tether');
+    for (var id in MarketData.getCryptocurrencyIds()) {
+      print(cryptocurrencyPrices);
+      cryptocurrencyPrices[id] = await getCoinPrice(id);
+    }
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    getValue(String id, double amount) {
-      if (id == 'bitcoin') {
-        return bitcoin * amount;
-      } else if (id == 'ethereum') {
-        return ethereum * amount;
-      } else {
-        return tether * amount;
-      }
+    double getValue(String id, double amount) {
+      return cryptocurrencyPrices[id]! * amount;
     }
 
     return SafeArea(
