@@ -12,7 +12,7 @@ import 'package:foliage/api/flutterfire.dart';
 import 'package:foliage/components/custom_snackbar.dart';
 import 'package:foliage/constants/colors.dart';
 import 'package:foliage/main.dart';
-import 'package:foliage/views/main/add_view.dart';
+import 'package:foliage/views/main/add_crypto_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -54,12 +54,9 @@ class _HomeViewState extends State<HomeView> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(),
-        body: Container(
+        body: SizedBox(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          decoration: const BoxDecoration(
-            color: Colors.white,
-          ),
           child: Center(
             child: StreamBuilder(
                 stream: FirebaseFirestore.instance
@@ -86,7 +83,7 @@ class _HomeViewState extends State<HomeView> {
                           height: MediaQuery.of(context).size.height / 12,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15.0),
-                            color: Colors.blue,
+                            color: CustomColors.materialBlue,
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -98,20 +95,17 @@ class _HomeViewState extends State<HomeView> {
                                 'Coin: ${document.id}',
                                 style: const TextStyle(
                                   fontSize: 18.0,
-                                  color: Colors.white,
                                 ),
                               ),
                               Text(
                                 "\$${getValue(document.id, document.get('Amount')).toStringAsFixed(2)}",
                                 style: const TextStyle(
                                   fontSize: 18.0,
-                                  color: Colors.white,
                                 ),
                               ),
                               IconButton(
                                 icon: const Icon(
                                   Icons.close,
-                                  color: Colors.white,
                                 ),
                                 onPressed: () async {
                                   await removeCoin(document.id);
@@ -157,7 +151,7 @@ Widget _homeFAB(context) {
   return SpeedDial(
     animatedIcon: AnimatedIcons.menu_close,
     animatedIconTheme: const IconThemeData(size: 22.0),
-    backgroundColor: CustomColors.materialBlue,
+    backgroundColor: CustomColors.foliageGreen,
     spacing: 15.0,
     childMargin: const EdgeInsets.all(15.0),
     visible: true,
@@ -166,13 +160,14 @@ Widget _homeFAB(context) {
       SpeedDialChild(
         child: const Icon(Icons.add),
         backgroundColor: CustomColors.materialBlue,
-        label: 'Add Coin',
+        label: 'Add Crypto',
         labelStyle: const TextStyle(fontSize: 18.0),
+        labelBackgroundColor: CustomColors.materialBlue,
         onTap: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const AddView(),
+              builder: (context) => const AddCryptoView(),
             ),
           );
         },
@@ -182,6 +177,7 @@ Widget _homeFAB(context) {
         backgroundColor: CustomColors.materialBlue,
         label: 'Sign Out',
         labelStyle: const TextStyle(fontSize: 18.0),
+        labelBackgroundColor: CustomColors.materialBlue,
         onTap: () => logOutButtonClick(() {
           Navigator.pushReplacement(
             context,
@@ -196,6 +192,7 @@ Widget _homeFAB(context) {
         backgroundColor: CustomColors.materialBlue,
         label: 'Refresh',
         labelStyle: const TextStyle(fontSize: 18.0),
+        labelBackgroundColor: CustomColors.materialBlue,
         onTap: () {
           Navigator.pushReplacement(
             context,
