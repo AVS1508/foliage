@@ -12,6 +12,7 @@ import 'package:foliage/api/cryptocurrency.dart';
 import 'package:foliage/api/user.dart';
 import 'package:foliage/components/custom_snackbar.dart';
 import 'package:foliage/constants/colors.dart';
+import 'package:foliage/constants/market_data.dart';
 import 'package:foliage/main.dart';
 import 'package:foliage/views/main/add_crypto_view.dart';
 
@@ -88,7 +89,7 @@ class _HomeViewState extends State<HomeView> {
                                 width: 5.0,
                               ),
                               Text(
-                                'Coin: ${document.id}',
+                                '${MarketData.getCryptocurrencyName(document.id)} (${MarketData.getCryptocurrencySymbol(document.id)})',
                                 style: const TextStyle(
                                   fontSize: 18.0,
                                 ),

@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:foliage/api/cryptocurrency.dart';
 import 'package:foliage/components/custom_snackbar.dart';
 import 'package:foliage/constants/colors.dart';
+import 'package:foliage/constants/market_data.dart';
 import 'package:foliage/utils/validators.dart';
 
 class AddCryptoView extends StatefulWidget {
@@ -16,14 +17,7 @@ class AddCryptoView extends StatefulWidget {
 }
 
 class _AddCryptoViewState extends State<AddCryptoView> {
-  List<String> coins = [
-    'bitcoin',
-    'tether',
-    'ethereum',
-    'shibainu',
-    'dogecoin',
-    'solana',
-  ];
+  List<String> coins = MarketData.getCryptocurrencyIds();
 
   String? dropdownValue;
   final TextEditingController _amountController = TextEditingController();
@@ -71,6 +65,7 @@ class _AddCryptoViewState extends State<AddCryptoView> {
                       fillColor: Colors.transparent,
                       border: OutlineInputBorder(),
                     ),
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
                     style: const TextStyle(
                       fontSize: 18,
                     ),
@@ -84,7 +79,9 @@ class _AddCryptoViewState extends State<AddCryptoView> {
                     items: coins.map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value),
+                        child: Text(
+                          '${MarketData.getCryptocurrencyName(value)} (${MarketData.getCryptocurrencySymbol(value)})',
+                        ),
                       );
                     }).toList(),
                     validator: (value) {
