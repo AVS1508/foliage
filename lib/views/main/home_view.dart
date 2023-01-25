@@ -7,8 +7,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 // Project imports:
-import 'package:foliage/api/api_methods.dart';
-import 'package:foliage/api/flutterfire.dart';
+import 'package:foliage/api/coingecko.dart';
+import 'package:foliage/api/user.dart';
+import 'package:foliage/api/cryptocurrency.dart';
 import 'package:foliage/components/custom_snackbar.dart';
 import 'package:foliage/constants/colors.dart';
 import 'package:foliage/main.dart';
@@ -59,13 +60,8 @@ class _HomeViewState extends State<HomeView> {
           height: MediaQuery.of(context).size.height,
           child: Center(
             child: StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('Users')
-                    .doc(FirebaseAuth.instance.currentUser?.uid)
-                    .collection('Coins')
-                    .snapshots(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                stream: FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('cryptocurrencies').snapshots(),
+                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (!snapshot.hasData) {
                     return const Center(
                       child: CircularProgressIndicator(),
@@ -98,7 +94,7 @@ class _HomeViewState extends State<HomeView> {
                                 ),
                               ),
                               Text(
-                                "\$${getValue(document.id, document.get('Amount')).toStringAsFixed(2)}",
+                                "\$${getValue(document.id, document.get('amount')).toStringAsFixed(2)}",
                                 style: const TextStyle(
                                   fontSize: 18.0,
                                 ),
@@ -108,7 +104,7 @@ class _HomeViewState extends State<HomeView> {
                                   Icons.close,
                                 ),
                                 onPressed: () async {
-                                  await removeCoin(document.id);
+                                  await removeCryptocurrency(document.id);
                                 },
                               ),
                             ],

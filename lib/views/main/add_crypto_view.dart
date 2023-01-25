@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Project imports:
-import 'package:foliage/api/flutterfire.dart';
+import 'package:foliage/api/cryptocurrency.dart';
 import 'package:foliage/components/custom_snackbar.dart';
 import 'package:foliage/constants/colors.dart';
 import 'package:foliage/utils/validators.dart';
@@ -31,7 +31,7 @@ class _AddCryptoViewState extends State<AddCryptoView> {
 
   void addButtonClick(VoidCallback onSuccess) async {
     if (_addCryptoFormKey.currentState!.validate()) {
-      await addCoin(dropdownValue!, _amountController.text).then((tuple) {
+      await addCryptocurrency(dropdownValue!, _amountController.text).then((tuple) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: CustomSnackbar(
@@ -109,12 +109,8 @@ class _AddCryptoViewState extends State<AddCryptoView> {
                       labelText: 'Token Amount',
                       hintText: 'Token Amount',
                     ),
-                    keyboardType:
-                        const TextInputType.numberWithOptions(decimal: true),
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r'^(\d+)?\.?\d{0,16}'))
-                    ],
+                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                    inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,16}'))],
                     validator: (value) => doubleValidator(value),
                   ),
                 ),

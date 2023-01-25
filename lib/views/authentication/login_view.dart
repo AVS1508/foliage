@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:foliage/api/flutterfire.dart';
+import 'package:foliage/api/user.dart';
 import 'package:foliage/components/custom_snackbar.dart';
 import 'package:foliage/components/terms_and_conditions.dart';
 import 'package:foliage/constants/colors.dart';
