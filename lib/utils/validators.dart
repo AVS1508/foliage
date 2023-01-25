@@ -29,3 +29,13 @@ String? passwordConfirmValidator(passwordInput, passwordConfirmInput) {
   }
   return null;
 }
+
+String? doubleValidator(doubleInput) {
+  print(doubleInput);
+  if (doubleInput == null ||
+      doubleInput.isEmpty ||
+      double.parse(doubleInput) == 0) {
+    return 'Enter a valid non-zero amount.';
+  }
+  return null;
+}
