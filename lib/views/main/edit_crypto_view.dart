@@ -2,9 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-// Package imports:
-import 'package:dropdown_button2/dropdown_button2.dart';
-
 // Project imports:
 import 'package:foliage/api/cryptocurrency.dart';
 import 'package:foliage/components/custom_snackbar.dart';
@@ -12,23 +9,29 @@ import 'package:foliage/constants/colors.dart';
 import 'package:foliage/constants/market_data.dart';
 import 'package:foliage/utils/validators.dart';
 
-class AddCryptoView extends StatefulWidget {
-  const AddCryptoView({super.key});
+class EditCryptoView extends StatefulWidget {
+  final String cryptocurrencyID;
+  final String cryptocurrencyAmount;
+
+  const EditCryptoView({Key? key, required this.cryptocurrencyID, required this.cryptocurrencyAmount}) : super(key: key);
 
   @override
-  State<AddCryptoView> createState() => _AddCryptoViewState();
+  State<EditCryptoView> createState() => _EditCryptoViewState();
 }
 
-class _AddCryptoViewState extends State<AddCryptoView> {
-  List<String> coins = MarketData.getCryptocurrencyIds();
-
-  String? dropdownValue;
+class _EditCryptoViewState extends State<EditCryptoView> {
   final TextEditingController _amountController = TextEditingController();
-  final _addCryptoFormKey = GlobalKey<FormState>();
+  final _editCryptoFormKey = GlobalKey<FormState>();
 
-  void addButtonClick(VoidCallback onSuccess) async {
-    if (_addCryptoFormKey.currentState!.validate()) {
-      await addCryptocurrency(dropdownValue!, _amountController.text).then((tuple) {
+  @override
+  void initState() {
+    _amountController.text = widget.cryptocurrencyAmount;
+    super.initState();
+  }
+
+  void updateButtonClick(VoidCallback onSuccess) async {
+    if (_editCryptoFormKey.currentState!.validate()) {
+      await updateCryptocurrency(widget.cryptocurrencyID, _amountController.text).then((tuple) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: CustomSnackbar(
@@ -56,49 +59,19 @@ class _AddCryptoViewState extends State<AddCryptoView> {
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           child: Form(
-            key: _addCryptoFormKey,
+            key: _editCryptoFormKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.9,
-                  child: DropdownButtonFormField2(
-                    isExpanded: true,
-                    hint: const Expanded(
-                      child: Text(
-                        'Token Name',
-                        style: TextStyle(
-                          fontSize: 18,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                  child: Text(
+                    '${MarketData.getCryptocurrencyName(widget.cryptocurrencyID)} \n (${MarketData.getCryptocurrencySymbol(widget.cryptocurrencyID)})',
+                    style: const TextStyle(
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.bold,
                     ),
-                    decoration: const InputDecoration(
-                      isDense: true,
-                      contentPadding: EdgeInsets.symmetric(vertical: 20.0, horizontal: -4.0),
-                      filled: true,
-                      fillColor: Colors.transparent,
-                      border: OutlineInputBorder(),
-                    ),
-                    dropdownMaxHeight: 200,
-                    scrollbarAlwaysShow: true,
-                    value: dropdownValue,
-                    onChanged: (value) {
-                      setState(() {
-                        dropdownValue = value.toString();
-                      });
-                    },
-                    items: coins.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          '${MarketData.getCryptocurrencyName(value)} (${MarketData.getCryptocurrencySymbol(value)})',
-                        ),
-                      );
-                    }).toList(),
-                    validator: (value) {
-                      return (value != null) ? null : 'Select a token name.';
-                    },
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 SizedBox(
@@ -111,6 +84,10 @@ class _AddCryptoViewState extends State<AddCryptoView> {
                       fontSize: 18,
                     ),
                     controller: _amountController,
+                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,18}')),
+                    ],
                     decoration: const InputDecoration(
                       filled: true,
                       fillColor: Colors.transparent,
@@ -118,10 +95,6 @@ class _AddCryptoViewState extends State<AddCryptoView> {
                       labelText: 'Token Amount',
                       hintText: 'Token Amount',
                     ),
-                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,18}')),
-                    ],
                     validator: (value) => doubleValidator(value),
                   ),
                 ),
@@ -136,11 +109,11 @@ class _AddCryptoViewState extends State<AddCryptoView> {
                     color: CustomColors.foliageGreen,
                   ),
                   child: MaterialButton(
-                    onPressed: () => addButtonClick(() {
+                    onPressed: () => updateButtonClick(() {
                       Navigator.of(context).pop();
                     }),
                     child: const Text(
-                      'Add Tokens to Wallet',
+                      'Update Tokens in Wallet',
                       style: TextStyle(
                         fontSize: 18,
                         color: CustomColors.trueWhite,

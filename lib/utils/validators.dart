@@ -1,13 +1,10 @@
 // Dart imports:
 import 'dart:core';
 
-const String _emailRegex =
-    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
+const String _emailRegex = r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
 
 String? emailValidator(emailInput) {
-  if (emailInput == null ||
-      emailInput.isEmpty ||
-      !RegExp(_emailRegex).hasMatch(emailInput)) {
+  if (emailInput == null || emailInput.isEmpty || !RegExp(_emailRegex).hasMatch(emailInput)) {
     return 'Enter a valid email address.';
   }
   return null;
@@ -31,10 +28,7 @@ String? passwordConfirmValidator(passwordInput, passwordConfirmInput) {
 }
 
 String? doubleValidator(doubleInput) {
-  print(doubleInput);
-  if (doubleInput == null ||
-      doubleInput.isEmpty ||
-      double.parse(doubleInput) == 0) {
+  if (doubleInput == null || doubleInput.isEmpty || double.parse(doubleInput) == 0) {
     return 'Enter a valid non-zero amount.';
   }
   return null;

@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:foliage/api/flutterfire.dart';
+import 'package:foliage/api/user.dart';
 import 'package:foliage/components/custom_snackbar.dart';
 import 'package:foliage/constants/colors.dart';
 import 'package:foliage/utils/validators.dart';
@@ -24,9 +24,7 @@ class _RegisterViewState extends State<RegisterView> {
 
   void signUpButtonClick(VoidCallback onSuccess) async {
     if (_registerFormKey.currentState!.validate()) {
-      await register(
-              _displayNameField.text, _emailField.text, _passwordField.text)
-          .then((tuple) {
+      await registerUser(_displayNameField.text, _emailField.text, _passwordField.text).then((tuple) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: CustomSnackbar(
@@ -132,8 +130,7 @@ class _RegisterViewState extends State<RegisterView> {
                         hintText: 'Confirm Password',
                       ),
                       obscureText: true,
-                      validator: (value) =>
-                          passwordConfirmValidator(_passwordField.text, value),
+                      validator: (value) => passwordConfirmValidator(_passwordField.text, value),
                     ),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height / 40),
