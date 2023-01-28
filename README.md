@@ -27,6 +27,81 @@ This app was created with the intent of learning:
 
 - **ERC-20 Token**: ERC-20 is a protocol for Ethereum tokens to follow within the larger Ethereum ecosystem, allowing developers to program how new tokens will function in this ecosystem. It also enables developers to accurately predict interaction between tokens, by including how tokens are transferred between addresses and how data within each token is accessed. (From [Coinbase Help](https://help.coinbase.com/en/coinbase/getting-started/crypto-education/what-is-erc20))
 
+## Folder Structure ##
+
+The `/lib` folder has been compartmentalized into the following sections:
+
+1. `api`:
+2. `assets`:
+3. `components`:
+4. `constants`:
+5. `utils`:
+6. `views`:
+
+## Cloud Firestore Database Structure ##
+
+```json
+{
+    "users": {
+        "_type": "Collection",
+        "$uid1": {
+            "_type": "Document",
+            "displayName": "User 1",
+            "email": "uid1@email.com",
+            "cryptocurrencies": {
+                "_type": "Collection",
+                "$coin1": {
+                    "_type": "Document",
+                    "amount": "0.1"
+                },
+                "$coin2": {
+                    "_type": "Document",
+                    "amount": "1.0"
+                },
+            },
+            "stocks": {
+                "_type": "Collection",
+                "$stock1": {
+                    "_type": "Document",
+                    "amount": "0.8"
+                },
+                "$stock2": {
+                    "_type": "Document",
+                    "amount": "4.0"
+                },
+            }
+        },
+        "$uid2": {
+            "_type": "Document",
+            "displayName": "User 2",
+            "email": "uid2@email.com",
+            "cryptocurrencies": {
+                "_type": "Collection",
+                "$coin1": {
+                    "_type": "Document",
+                    "amount": "0.1"
+                },
+                "$coin2": {
+                    "_type": "Document",
+                    "amount": "1.0"
+                },
+            },
+            "stocks": {
+                "_type": "Collection",
+                "$stock1": {
+                    "_type": "Document",
+                    "amount": "0.8"
+                },
+                "$stock2": {
+                    "_type": "Document",
+                    "amount": "4.0"
+                },
+            }
+        },
+    },
+}
+```
+
 ## Theming ##
 
 Theming for the project has been configured via `lib/utils/theme.dart`, and complies with the color palette as follows:
@@ -55,5 +130,5 @@ This color palette is used with the following theme configuration:
 | `onPrimary`    | trueWhite    | trueWhite    |
 | `secondary`    | materialBlue | materialBlue |
 | `onSecondary`  | trueWhite    | trueWhite    |
-| `surface`      | cadetGrey    | cadetGrey    |
+| `surface`      | foliageGreen | foliageGreen |
 | `onSurface`    | trueWhite    | trueWhite    |
