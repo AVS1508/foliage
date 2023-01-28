@@ -24,7 +24,7 @@ class MarketData {
       'name': 'Dogecoin',
       'symbol': 'DOGE',
     },
-    'xrp': {
+    'ripple': {
       'name': 'Ripple',
       'symbol': 'XRP',
     },
@@ -48,7 +48,7 @@ class MarketData {
       'name': 'Tron',
       'symbol': 'TRX',
     },
-    'avalanche': {
+    'avalanche-2': {
       'name': 'Avalanche',
       'symbol': 'AVAX',
     },
