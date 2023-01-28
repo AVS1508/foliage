@@ -1,11 +1,13 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+// Project imports:
 import 'package:foliage/api/cryptocurrency.dart';
 import 'package:foliage/components/custom_snackbar.dart';
+import 'package:foliage/constants/colors.dart';
 import 'package:foliage/constants/market_data.dart';
 import 'package:foliage/utils/validators.dart';
-
-import 'package:foliage/constants/colors.dart';
 
 class EditCryptoView extends StatefulWidget {
   final String cryptocurrencyID;
