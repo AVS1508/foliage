@@ -15,6 +15,7 @@ import 'package:foliage/constants/colors.dart';
 import 'package:foliage/constants/market_data.dart';
 import 'package:foliage/main.dart';
 import 'package:foliage/views/main/add_crypto_view.dart';
+import 'package:foliage/views/main/edit_crypto_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -34,7 +35,6 @@ class _HomeViewState extends State<HomeView> {
 
   getValues() async {
     for (var id in MarketData.getCryptocurrencyIds()) {
-      print(cryptocurrencyPrices);
       cryptocurrencyPrices[id] = await getCoinPrice(id);
     }
     setState(() {});
@@ -65,43 +65,78 @@ class _HomeViewState extends State<HomeView> {
                     children: snapshot.data!.docs.map((document) {
                       return Padding(
                         padding: const EdgeInsets.only(
-                          top: 5.0,
+                          top: 15.0,
                           left: 15.0,
                           right: 15.0,
                         ),
                         child: Container(
                           height: MediaQuery.of(context).size.height / 12,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15.0),
+                            borderRadius: BorderRadius.circular(20.0),
                             color: CustomColors.materialBlue,
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const SizedBox(
-                                width: 5.0,
-                              ),
-                              Text(
-                                '${MarketData.getCryptocurrencyName(document.id)} (${MarketData.getCryptocurrencySymbol(document.id)})',
-                                style: const TextStyle(
-                                  fontSize: 18.0,
+                          child: Center(
+                            child: Table(
+                              columnWidths: const {
+                                1: FlexColumnWidth(4),
+                                2: FlexColumnWidth(6),
+                                3: FlexColumnWidth(1),
+                                4: FlexColumnWidth(2),
+                                5: FlexColumnWidth(2),
+                              },
+                              defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                              children: [
+                                TableRow(
+                                  children: [
+                                    const Padding(padding: EdgeInsets.only(right: 15.0)),
+                                    Text(
+                                      '${MarketData.getCryptocurrencyName(document.id)} \n (${MarketData.getCryptocurrencySymbol(document.id)})',
+                                      style: const TextStyle(
+                                        fontSize: 18.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    Text(
+                                      "\$ ${getValue(document.id, document.get('amount')).toStringAsFixed(2)} \n (${document.get('amount')})",
+                                      style: const TextStyle(
+                                        fontSize: 18.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.end,
+                                    ),
+                                    const Text(''),
+                                    IconButton(
+                                      icon: const Icon(
+                                        Icons.edit,
+                                      ),
+                                      onPressed: () async {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => EditCryptoView(
+                                              cryptocurrencyID: document.id,
+                                              cryptocurrencyAmount: document.get('amount').toString(),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(
+                                        Icons.delete,
+                                      ),
+                                      padding: const EdgeInsets.only(
+                                        right: 15.0,
+                                      ),
+                                      onPressed: () async {
+                                        await removeCryptocurrency(document.id);
+                                      },
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              Text(
-                                "\$${getValue(document.id, document.get('amount')).toStringAsFixed(2)}",
-                                style: const TextStyle(
-                                  fontSize: 18.0,
-                                ),
-                              ),
-                              IconButton(
-                                icon: const Icon(
-                                  Icons.close,
-                                ),
-                                onPressed: () async {
-                                  await removeCryptocurrency(document.id);
-                                },
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       );
