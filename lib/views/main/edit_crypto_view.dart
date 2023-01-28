@@ -63,7 +63,7 @@ class _EditCryptoViewState extends State<EditCryptoView> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
+                SizedBox(
                   width: MediaQuery.of(context).size.width * 0.9,
                   child: Text(
                     '${MarketData.getCryptocurrencyName(widget.cryptocurrencyID)} \n (${MarketData.getCryptocurrencySymbol(widget.cryptocurrencyID)})',
