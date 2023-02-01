@@ -16,12 +16,16 @@ dependencies:
     flutter_speed_dial: ^6.2.0
     dropdown_button2: ^1.9.2
     cloud_functions: ^4.0.7
+    provider: ^6.0.5
 dev_dependencies:
     flutter_test:
+        sdk: flutter
+    integration_test:
         sdk: flutter
     flutter_lints: ^2.0.0
     flutter_launcher_icons: ^0.11.0
     import_sorter: ^4.6.0
+    test: ^1.21.4
 flutter:
     uses-material-design: true
     assets:
