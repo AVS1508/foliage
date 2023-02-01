@@ -15,6 +15,7 @@ dependencies:
     flutter_native_splash: ^2.2.16
     flutter_speed_dial: ^6.2.0
     dropdown_button2: ^1.9.2
+    cloud_functions: ^4.0.7
 dev_dependencies:
     flutter_test:
         sdk: flutter
