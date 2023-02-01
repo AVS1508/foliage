@@ -7,7 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 // Project imports:
-import 'package:foliage/api/coingecko.dart';
 import 'package:foliage/api/cryptocurrency.dart';
 import 'package:foliage/api/user.dart';
 import 'package:foliage/components/custom_snackbar.dart';
@@ -25,7 +24,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  var cryptocurrencyPrices = {for (var id in MarketData.getCryptocurrencyIds()) id: 0.0};
+  var _cryptocurrencyPrices = {for (var id in MarketData.getCryptocurrencyIds()) id: 0.0};
 
   @override
   void initState() {
@@ -33,19 +32,19 @@ class _HomeViewState extends State<HomeView> {
     getValues();
   }
 
-  getValues() async {
-    for (var id in MarketData.getCryptocurrencyIds()) {
-      cryptocurrencyPrices[id] = await getCoinPrice(id);
-    }
-    setState(() {});
+  getValues() {
+    CollectionReference prices = FirebaseFirestore.instance.collection('prices');
+    prices.snapshots().listen((querySnapshot) {
+      querySnapshot.docs.forEach((result) {
+        setState(() {
+          _cryptocurrencyPrices[result.id] = result.get('price');
+        });
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    double getValue(String id, double amount) {
-      return cryptocurrencyPrices[id]! * amount;
-    }
-
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(),
@@ -98,7 +97,7 @@ class _HomeViewState extends State<HomeView> {
                                       textAlign: TextAlign.center,
                                     ),
                                     Text(
-                                      "\$ ${getValue(document.id, document.get('amount')).toStringAsFixed(2)} \n (${document.get('amount')})",
+                                      "\$ ${(_cryptocurrencyPrices[document.id]! * document.get('amount')).toStringAsFixed(2)} \n (${document.get('amount')})",
                                       style: const TextStyle(
                                         fontSize: 18.0,
                                         fontWeight: FontWeight.bold,
